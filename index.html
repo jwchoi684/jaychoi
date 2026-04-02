@@ -3,1102 +3,753 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>팀 휴가 관리</title>
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>슈퍼디자이너 — 브랜드를 완성하는 디자인</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+KR:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f4f5f7;
-    --surface: #ffffff;
-    --surface2: #f8f9fb;
-    --border: #e5e7eb;
-    --border2: #d1d5db;
-    --text: #111827;
-    --text2: #6b7280;
-    --text3: #9ca3af;
-    --accent: #2563eb;
-    --accent-light: #eff6ff;
-    --accent-hover: #1d4ed8;
-    --green: #16a34a;
-    --green-light: #f0fdf4;
-    --red: #dc2626;
-    --red-light: #fef2f2;
-    --orange: #ea580c;
-    --orange-light: #fff7ed;
-    --purple: #7c3aed;
-    --purple-light: #f5f3ff;
-    --yellow: #ca8a04;
-    --yellow-light: #fefce8;
-    --radius: 12px;
-    --radius-sm: 8px;
-    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
-    --shadow-md: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,.04);
-    --shadow-lg: 0 10px 30px rgba(0,0,0,.1), 0 4px 10px rgba(0,0,0,.06);
+    --ink: #0e0e0e;
+    --cream: #f5f0e8;
+    --warm-white: #faf8f4;
+    --accent: #e84c2b;
+    --accent-soft: #ff6b4a;
+    --muted: #8a8580;
+    --border: rgba(14,14,14,0.1);
+    --card-bg: #ffffff;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Pretendard', -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    font-size: 14px;
-    line-height: 1.5;
+    background: var(--warm-white);
+    color: var(--ink);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
   }
 
-  /* ── Layout ── */
-  .app { display: flex; min-height: 100vh; }
-
-  .sidebar {
-    width: 220px;
-    min-height: 100vh;
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 0; left: 0; bottom: 0;
-    z-index: 100;
-  }
-
-  .logo {
-    padding: 24px 20px 20px;
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(250,248,244,0.92);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
   }
-  .logo-mark {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.12em;
+    color: var(--ink);
     text-decoration: none;
   }
-  .logo-icon {
-    width: 32px; height: 32px;
-    background: var(--accent);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    color: #fff;
-    font-size: 16px;
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
   }
-  .logo-text { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -.3px; }
-  .logo-sub { font-size: 11px; color: var(--text3); }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    background: var(--accent); color: #fff;
+    padding: 0.55rem 1.4rem; font-size: 0.78rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none; border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--accent-soft); transform: translateY(-1px); }
 
-  nav { padding: 12px 10px; flex: 1; }
-  .nav-section { margin-bottom: 20px; }
-  .nav-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .8px; padding: 4px 10px 8px; }
-  .nav-item {
-    display: flex; align-items: center; gap: 9px;
-    padding: 9px 10px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    color: var(--text2);
-    font-size: 13.5px;
-    font-weight: 500;
-    transition: all .15s;
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 4rem 6rem 4rem;
+    position: relative; z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.6rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: inline-block;
+    width: 2rem; height: 1px; background: var(--accent);
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 7vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.8rem;
+  }
+  .hero-title em {
+    font-style: normal; color: var(--accent);
+    -webkit-text-stroke: 0px;
+  }
+  .hero-sub {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.05rem; line-height: 1.85;
+    color: #555; max-width: 400px; margin-bottom: 3rem;
+    font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--ink); color: #fff;
+    padding: 0.9rem 2.2rem; font-size: 0.82rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+  .btn-outline {
+    border: 1.5px solid var(--ink); color: var(--ink);
+    padding: 0.9rem 2.2rem; font-size: 0.82rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { background: var(--ink); color: #fff; transform: translateY(-2px); }
+
+  .hero-right {
+    background: var(--ink);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-right::before {
+    content: 'SD';
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28vw; color: rgba(255,255,255,0.04);
+    position: absolute; line-height: 1;
     user-select: none;
   }
-  .nav-item:hover { background: var(--surface2); color: var(--text); }
-  .nav-item.active { background: var(--accent-light); color: var(--accent); }
-  .nav-item .icon { font-size: 15px; width: 18px; text-align: center; }
-  .badge {
-    margin-left: auto;
-    background: var(--red);
-    color: #fff;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 20px;
-    min-width: 18px;
-    text-align: center;
+  .hero-visual-inner {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    width: 78%; padding: 3rem 0;
+  }
+  .h-card {
+    background: rgba(255,255,255,0.06);
+    padding: 2rem 1.6rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.3s;
+  }
+  .h-card:hover { background: rgba(255,255,255,0.1); }
+  .h-card:first-child { border-top-left-radius: 4px; }
+  .h-card:nth-child(2) { background: var(--accent); border-color: var(--accent); }
+  .h-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem; color: #fff; line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .h-label { font-size: 0.72rem; color: rgba(255,255,255,0.6); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .hero-badge {
+    position: absolute; bottom: 3rem; left: 4rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.75rem; color: var(--muted); letter-spacing: 0.06em;
+  }
+  .badge-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #2ecc71; animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
   }
 
-  .main { margin-left: 220px; flex: 1; min-height: 100vh; }
-  .topbar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 32px;
-    height: 60px;
-    display: flex; align-items: center;
-    position: sticky; top: 0; z-index: 50;
+  /* ── MARQUEE ── */
+  .marquee-strip {
+    background: var(--ink); color: #fff;
+    padding: 0.9rem 0; overflow: hidden;
+    border-top: 1px solid rgba(255,255,255,0.06);
   }
-  .topbar h1 { font-size: 17px; font-weight: 700; letter-spacing: -.3px; }
-  .topbar-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; }
-  .avatar {
-    width: 34px; height: 34px;
-    background: var(--accent);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 13px; font-weight: 700;
-    cursor: pointer;
+  .marquee-track {
+    display: flex; gap: 3rem;
+    animation: marquee 18s linear infinite;
+    width: max-content;
+  }
+  .marquee-track span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 0.15em;
+    white-space: nowrap; color: rgba(255,255,255,0.7);
+  }
+  .marquee-track span.accent { color: var(--accent); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 6rem 4rem; }
+  .section-tag {
+    font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .section-tag::before { content:''; width:1.5rem; height:1px; background:var(--accent); }
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 600; line-height: 1.3;
+    margin-bottom: 1rem;
+  }
+  .section-desc {
+    font-size: 0.95rem; color: var(--muted); line-height: 1.9;
+    max-width: 480px; margin-bottom: 3.5rem;
   }
 
-  .page { padding: 28px 32px; display: none; }
-  .page.active { display: block; }
+  /* ── SERVICES ── */
+  #services { background: var(--cream); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px;
+    background: var(--border); border: 1px solid var(--border);
+    border-radius: 4px; overflow: hidden;
+  }
+  .service-card {
+    background: var(--warm-white);
+    padding: 3rem 2.4rem;
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+  }
+  .service-card:hover { background: var(--ink); }
+  .service-card:hover .s-icon, .service-card:hover .s-title,
+  .service-card:hover .s-text, .service-card:hover .s-list li { color: rgba(255,255,255,0.85); }
+  .service-card:hover .s-number { color: rgba(255,255,255,0.08); }
+  .service-card:hover .s-tag { color: var(--accent-soft); }
+  .s-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem; color: rgba(14,14,14,0.05);
+    line-height: 1; position: absolute; top: 1.2rem; right: 1.5rem;
+    transition: color 0.3s;
+  }
+  .s-icon { font-size: 2rem; margin-bottom: 1.4rem; transition: color 0.3s; }
+  .s-tag {
+    font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 0.7rem; transition: color 0.3s;
+  }
+  .s-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.35rem; font-weight: 600;
+    margin-bottom: 0.9rem; line-height: 1.3;
+    transition: color 0.3s;
+  }
+  .s-text { font-size: 0.88rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.5rem; transition: color 0.3s; }
+  .s-list { list-style: none; }
+  .s-list li {
+    font-size: 0.82rem; color: var(--muted); padding: 0.35rem 0;
+    border-top: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem;
+    transition: color 0.3s;
+  }
+  .s-list li::before { content: '→'; color: var(--accent); font-size: 0.7rem; }
 
-  /* ── Cards ── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+  /* ── STRENGTHS ── */
+  #strengths {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; padding: 0; align-items: stretch;
   }
-  .card-header {
-    padding: 20px 24px 16px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 10px;
+  .str-left {
+    background: var(--ink); padding: 6rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
   }
-  .card-title { font-size: 15px; font-weight: 700; letter-spacing: -.2px; }
-  .card-body { padding: 24px; }
-
-  /* ── Form ── */
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .form-full { grid-column: 1 / -1; }
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
-  label { font-size: 13px; font-weight: 600; color: var(--text); }
-  input, select, textarea {
-    border: 1.5px solid var(--border2);
-    border-radius: var(--radius-sm);
-    padding: 10px 13px;
-    font-family: inherit;
-    font-size: 14px;
-    color: var(--text);
-    background: var(--surface);
-    transition: border-color .15s, box-shadow .15s;
-    outline: none;
-    width: 100%;
+  .str-left .section-tag { color: rgba(255,255,255,0.4); }
+  .str-left .section-tag::before { background: rgba(255,255,255,0.3); }
+  .str-left .section-title { color: #fff; }
+  .str-left .section-desc { color: rgba(255,255,255,0.45); max-width: 380px; }
+  .str-right { padding: 6rem 4rem; display: flex; flex-direction: column; justify-content: center; gap: 0; }
+  .str-item {
+    padding: 2rem 0; border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: center; gap: 1.6rem;
+    transition: background 0.2s;
   }
-  input:focus, select:focus, textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(37,99,235,.12);
+  .str-item:first-child { border-top: 1px solid var(--border); }
+  .str-icon-box {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--cream); display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
   }
-  textarea { resize: vertical; min-height: 80px; }
-  .hint { font-size: 12px; color: var(--text3); }
-
-  /* ── Buttons ── */
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    padding: 10px 18px;
-    border-radius: var(--radius-sm);
-    font-family: inherit;
-    font-size: 13.5px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    transition: all .15s;
-    white-space: nowrap;
-  }
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); }
-  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border2); }
-  .btn-secondary:hover { background: var(--border); }
-  .btn-success { background: var(--green); color: #fff; }
-  .btn-success:hover { background: #15803d; }
-  .btn-danger { background: var(--red); color: #fff; }
-  .btn-danger:hover { background: #b91c1c; }
-  .btn-sm { padding: 6px 12px; font-size: 12px; }
-
-  /* ── Tags ── */
-  .tag {
-    display: inline-flex; align-items: center;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-  .tag-연차 { background: var(--accent-light); color: var(--accent); }
-  .tag-반차 { background: var(--purple-light); color: var(--purple); }
-  .tag-병가 { background: var(--orange-light); color: var(--orange); }
-  .tag-approved { background: var(--green-light); color: var(--green); }
-  .tag-rejected { background: var(--red-light); color: var(--red); }
-  .tag-pending { background: var(--yellow-light); color: var(--yellow); }
-
-  /* ── Stats ── */
-  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: var(--shadow);
-  }
-  .stat-label { font-size: 12px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
-  .stat-value { font-size: 28px; font-weight: 800; letter-spacing: -1px; color: var(--text); }
-  .stat-sub { font-size: 12px; color: var(--text3); margin-top: 4px; }
-  .stat-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    display: inline-block; margin-right: 6px;
+  .str-content h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.3rem; }
+  .str-content p { font-size: 0.83rem; color: var(--muted); line-height: 1.7; }
+  .str-badge {
+    background: var(--accent); color: #fff;
+    font-size: 0.65rem; font-weight: 500;
+    padding: 0.3rem 0.7rem; border-radius: 50px;
+    letter-spacing: 0.06em; white-space: nowrap;
   }
 
-  /* ── Calendar ── */
-  .cal-nav {
-    display: flex; align-items: center; gap: 12px;
-    padding: 16px 24px;
-    border-bottom: 1px solid var(--border);
-  }
-  .cal-month { font-size: 16px; font-weight: 700; letter-spacing: -.3px; }
-  .cal-nav-btn {
-    width: 30px; height: 30px;
-    border: 1px solid var(--border2);
-    border-radius: 6px;
-    background: var(--surface);
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-    transition: all .15s;
-  }
-  .cal-nav-btn:hover { background: var(--surface2); }
-  .cal-legend { margin-left: auto; display: flex; align-items: center; gap: 16px; }
-  .cal-legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text2); }
-  .cal-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-  .cal-grid {
+  /* ── PORTFOLIO ── */
+  #portfolio { background: var(--cream); }
+  .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 1rem;
   }
-  .cal-day-header {
-    text-align: center;
-    padding: 10px 4px;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: .5px;
-    border-bottom: 1px solid var(--border);
-  }
-  .cal-day-header:first-child { color: #ef4444; }
-  .cal-day-header:last-child { color: var(--accent); }
-  .cal-cell {
-    min-height: 100px;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 8px;
-    position: relative;
-    transition: background .15s;
-  }
-  .cal-cell:nth-child(7n) { border-right: none; }
-  .cal-cell.other-month .cal-date { color: var(--text3); }
-  .cal-cell.today { background: #eff6ff; }
-  .cal-cell.today .cal-date {
-    background: var(--accent);
-    color: #fff;
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700;
-  }
-  .cal-date { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
-  .cal-event {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 2px 6px;
-    border-radius: 4px;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .p-item {
+    position: relative; overflow: hidden; border-radius: 3px;
+    background: #ddd; aspect-ratio: 4/3;
     cursor: pointer;
-    transition: opacity .15s;
   }
-  .cal-event:hover { opacity: .8; }
-  .cal-event.연차 { background: #dbeafe; color: #1d4ed8; }
-  .cal-event.반차 { background: #ede9fe; color: #6d28d9; }
-  .cal-event.병가 { background: #ffedd5; color: #c2410c; }
-  .cal-sun .cal-date { color: #ef4444; }
-  .cal-sat .cal-date { color: var(--accent); }
+  .p-item:nth-child(1) { grid-column: 1/6; }
+  .p-item:nth-child(2) { grid-column: 6/13; }
+  .p-item:nth-child(3) { grid-column: 1/5; }
+  .p-item:nth-child(4) { grid-column: 5/9; }
+  .p-item:nth-child(5) { grid-column: 9/13; }
 
-  /* ── Table ── */
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; }
-  th {
+  .p-placeholder {
+    width: 100%; height: 100%; min-height: 220px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 0.8rem;
+    background: linear-gradient(135deg, #e8e4dc 0%, #d4cfc5 100%);
+    transition: transform 0.4s ease;
+  }
+  .p-item:hover .p-placeholder { transform: scale(1.04); }
+  .p-ph-icon { font-size: 2rem; color: #aaa; }
+  .p-ph-label {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #aaa;
+  }
+  .p-overlay {
+    position: absolute; inset: 0;
+    background: rgba(14,14,14,0); display: flex; flex-direction: column;
+    align-items: flex-start; justify-content: flex-end; padding: 1.4rem;
+    transition: background 0.3s;
+  }
+  .p-item:hover .p-overlay { background: rgba(14,14,14,0.68); }
+  .p-tag {
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); background: rgba(0,0,0,0.5);
+    padding: 0.25rem 0.6rem; border-radius: 2px;
+    opacity: 0; transform: translateY(8px); transition: all 0.3s 0.05s;
+    margin-bottom: 0.4rem;
+  }
+  .p-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1rem; color: #fff; font-weight: 400;
+    opacity: 0; transform: translateY(8px); transition: all 0.3s 0.1s;
+  }
+  .p-item:hover .p-tag, .p-item:hover .p-name {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* ── REVIEWS ── */
+  #reviews { background: var(--warm-white); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .review-card {
+    background: var(--card-bg); padding: 2.2rem;
+    border: 1px solid var(--border); border-radius: 4px;
+    position: relative; transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .review-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.07); }
+  .rv-stars { color: var(--accent); font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 1.2rem; }
+  .rv-text {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.92rem; line-height: 1.9; color: #444;
+    margin-bottom: 1.8rem; font-weight: 300;
+  }
+  .rv-author { display: flex; align-items: center; gap: 0.9rem; }
+  .rv-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--cream); display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; color: var(--muted); border: 1px solid var(--border);
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.05em;
+  }
+  .rv-name { font-size: 0.88rem; font-weight: 500; }
+  .rv-role { font-size: 0.75rem; color: var(--muted); }
+  .rv-quote-mark {
+    position: absolute; top: 1.4rem; right: 1.8rem;
+    font-family: 'Bebas Neue', sans-serif; font-size: 4rem;
+    color: var(--accent); opacity: 0.12; line-height: 1;
+  }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--ink); color: #fff;
+    text-align: center; padding: 7rem 4rem;
+  }
+  #contact .section-tag { justify-content: center; color: rgba(255,255,255,0.4); }
+  #contact .section-tag::before { background: rgba(255,255,255,0.3); }
+  #contact .section-title { color: #fff; margin: 0 auto 1rem; }
+  #contact .section-desc { color: rgba(255,255,255,0.45); margin: 0 auto 3rem; }
+  .contact-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px; padding: 3rem; max-width: 680px; margin: 0 auto 3rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
     text-align: left;
-    padding: 11px 16px;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text3);
-    text-transform: uppercase;
-    letter-spacing: .5px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface2);
-    white-space: nowrap;
   }
-  td {
-    padding: 13px 16px;
-    border-bottom: 1px solid var(--border);
-    font-size: 13.5px;
-    vertical-align: middle;
+  .c-info h4 { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.5rem; }
+  .c-info p { font-size: 1.05rem; color: #fff; font-weight: 400; }
+  .c-info a { color: var(--accent-soft); text-decoration: none; }
+  .contact-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-light {
+    background: #fff; color: var(--ink);
+    padding: 0.9rem 2.4rem; font-size: 0.82rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
   }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: var(--surface2); }
+  .btn-light:hover { background: var(--cream); transform: translateY(-2px); }
+  .btn-ghost {
+    border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.7);
+    padding: 0.9rem 2.4rem; font-size: 0.82rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: #fff; color: #fff; transform: translateY(-2px); }
 
-  /* ── Member summary ── */
-  .member-row {
-    display: flex; align-items: center; gap: 16px;
-    padding: 16px 24px;
-    border-bottom: 1px solid var(--border);
-    transition: background .15s;
+  /* ── FOOTER ── */
+  footer {
+    background: #080808; color: rgba(255,255,255,0.3);
+    padding: 2rem 4rem; display: flex; align-items: center;
+    justify-content: space-between; gap: 1rem; flex-wrap: wrap;
   }
-  .member-row:last-child { border-bottom: none; }
-  .member-row:hover { background: var(--surface2); }
-  .member-avatar {
-    width: 38px; height: 38px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 700; color: #fff;
-    flex-shrink: 0;
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem;
+    letter-spacing: 0.1em; color: rgba(255,255,255,0.5); text-decoration: none;
   }
-  .member-name { font-size: 14px; font-weight: 600; width: 80px; flex-shrink: 0; }
-  .member-bars { flex: 1; display: flex; flex-direction: column; gap: 6px; }
-  .bar-row { display: flex; align-items: center; gap: 8px; }
-  .bar-label { font-size: 11px; color: var(--text3); width: 20px; }
-  .bar-track { flex: 1; height: 6px; background: var(--border); border-radius: 4px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 4px; transition: width .6s cubic-bezier(.4,0,.2,1); }
-  .member-counts { display: flex; flex-direction: column; gap: 4px; width: 80px; }
-  .count-item { font-size: 12px; }
-  .count-num { font-weight: 700; }
+  .footer-logo span { color: var(--accent); }
+  footer p { font-size: 0.75rem; }
 
-  /* ── Toast ── */
-  .toast-wrap { position: fixed; bottom: 24px; right: 24px; z-index: 999; display: flex; flex-direction: column; gap: 8px; }
-  .toast {
-    background: var(--text);
-    color: #fff;
-    padding: 12px 18px;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    font-weight: 500;
-    box-shadow: var(--shadow-lg);
-    animation: slideUp .2s ease-out;
-    max-width: 300px;
-  }
-  .toast.success { background: var(--green); }
-  .toast.error { background: var(--red); }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.6rem; }
+    .nav-links { display: none; }
+    .nav-cta { padding: 0.5rem 1rem; font-size: 0.74rem; }
+
+    #hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 5rem 1.6rem 3rem; }
+    .hero-right { min-height: 260px; }
+    .hero-visual-inner { width: 88%; gap: 1px; }
+    .h-num { font-size: 2rem; }
+    .hero-badge { display: none; }
+
+    section { padding: 4rem 1.6rem; }
+    #strengths { grid-template-columns: 1fr; }
+    .str-left { padding: 4rem 1.6rem; }
+    .str-right { padding: 3rem 1.6rem; }
+
+    .services-grid { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; }
+    .p-item { grid-column: auto !important; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .contact-card { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; padding: 2rem 1.6rem; }
   }
 
-  /* ── Modal ── */
-  .overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,.4);
-    backdrop-filter: blur(2px);
-    z-index: 200;
-    display: none;
-    align-items: center; justify-content: center;
-  }
-  .overlay.open { display: flex; }
-  .modal {
-    background: var(--surface);
-    border-radius: 16px;
-    box-shadow: var(--shadow-lg);
-    width: 440px; max-width: 90vw;
-    animation: popIn .2s ease-out;
-  }
-  @keyframes popIn {
-    from { opacity: 0; transform: scale(.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  .modal-header {
-    padding: 22px 24px 18px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .modal-title { font-size: 16px; font-weight: 700; }
-  .modal-close { background: none; border: none; cursor: pointer; color: var(--text3); font-size: 18px; line-height: 1; padding: 2px; }
-  .modal-body { padding: 24px; }
-  .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px; }
-
-  .detail-row { display: flex; padding: 10px 0; border-bottom: 1px solid var(--border); }
-  .detail-row:last-child { border-bottom: none; }
-  .detail-label { font-size: 12px; font-weight: 600; color: var(--text3); width: 80px; flex-shrink: 0; padding-top: 1px; }
-  .detail-value { font-size: 14px; color: var(--text); }
-
-  .empty {
-    text-align: center;
-    padding: 60px 24px;
-    color: var(--text3);
-  }
-  .empty-icon { font-size: 40px; margin-bottom: 12px; }
-  .empty-text { font-size: 14px; }
-
-  .section-title { font-size: 13px; font-weight: 700; color: var(--text2); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-  .divider { height: 1px; background: var(--border); margin: 20px 0; }
-
-  @keyframes shimmer { 0%{background-position:200%} 100%{background-position:-200%} }
-
-  @media (max-width: 768px) {
-    .sidebar { display: none; }
-    .main { margin-left: 0; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .form-grid { grid-template-columns: 1fr; }
-    .page { padding: 20px 16px; }
-  }
+  /* ── FADE IN ── */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
 
-<div class="app">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="logo">
-      <div class="logo-mark">
-        <div class="logo-icon">🗓</div>
-        <div>
-          <div class="logo-text">LeaveHub</div>
-          <div class="logo-sub">팀 휴가 관리</div>
-        </div>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">슈퍼<span>디자이너</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">서비스</a></li>
+    <li><a href="#portfolio">포트폴리오</a></li>
+    <li><a href="#reviews">후기</a></li>
+    <li><a href="#contact">문의</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">지금 문의하기</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">프리랜서 디자이너</p>
+    <h1 class="hero-title">브랜드를<br>완성하는<br><em>디자인</em></h1>
+    <p class="hero-sub">로고부터 인쇄물까지, 당신의 브랜드 가치를 높이는 디자인을 빠르고 합리적인 가격으로 제공합니다.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#contact">무료 상담 받기</a>
+      <a class="btn-outline" href="#portfolio">포트폴리오 보기</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual-inner">
+      <div class="h-card">
+        <div class="h-num">200+</div>
+        <div class="h-label">완료 프로젝트</div>
+      </div>
+      <div class="h-card">
+        <div class="h-num">∞</div>
+        <div class="h-label">무제한 수정</div>
+      </div>
+      <div class="h-card">
+        <div class="h-num">48H</div>
+        <div class="h-label">초안 제공</div>
+      </div>
+      <div class="h-card">
+        <div class="h-num">98%</div>
+        <div class="h-label">고객 만족도</div>
       </div>
     </div>
-    <nav>
-      <div class="nav-section">
-        <div class="nav-label">메뉴</div>
-        <div class="nav-item active" onclick="showPage('apply')">
-          <span class="icon">✏️</span> 휴가 신청
-        </div>
-        <div class="nav-item" onclick="showPage('calendar')">
-          <span class="icon">📅</span> 휴가 달력
-        </div>
-        <div class="nav-item" onclick="showPage('admin')">
-          <span class="icon">⚙️</span> 관리자 화면
-          <span class="badge" id="pendingBadge">0</span>
-        </div>
-        <div class="nav-item" onclick="showPage('summary')">
-          <span class="icon">📊</span> 이번달 요약
-        </div>
-      </div>
-    </nav>
-  </aside>
+  </div>
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    현재 프로젝트 수락 중
+  </div>
+</section>
 
-  <!-- Main -->
-  <main class="main">
-    <!-- Topbar -->
-    <div class="topbar">
-      <h1 id="pageTitle">휴가 신청</h1>
-      <div class="topbar-actions">
-        <span style="font-size:12px;color:var(--text3);" id="todayDate"></span>
-        <button class="btn btn-secondary btn-sm" onclick="onRefresh()" title="새로고침">🔄</button>
-        <div class="avatar" title="관리자">관</div>
-      </div>
-    </div>
-    <div id="loadingBar" style="display:none;height:3px;background:linear-gradient(90deg,var(--accent),#60a5fa,var(--accent));background-size:200%;animation:shimmer 1.2s infinite;"></div>
-
-    <!-- Page: Apply -->
-    <div class="page active" id="page-apply">
-      <div style="max-width:600px;">
-        <div class="card">
-          <div class="card-header">
-            <span style="font-size:18px;">✏️</span>
-            <span class="card-title">새 휴가 신청</span>
-          </div>
-          <div class="card-body">
-            <div class="form-grid">
-              <div class="form-group form-full">
-                <label for="emp-name">신청자 이름</label>
-                <input type="text" id="emp-name" placeholder="이름을 입력하세요">
-              </div>
-              <div class="form-group">
-                <label for="leave-type">휴가 종류</label>
-                <select id="leave-type">
-                  <option value="연차">🏖️ 연차</option>
-                  <option value="반차">🌤️ 반차</option>
-                  <option value="병가">🏥 병가</option>
-                </select>
-              </div>
-              <div class="form-group" id="halfday-period-group" style="display:none;">
-                <label for="halfday-period">반차 구분</label>
-                <select id="halfday-period">
-                  <option value="오전">오전 반차</option>
-                  <option value="오후">오후 반차</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="start-date">시작일</label>
-                <input type="date" id="start-date">
-              </div>
-              <div class="form-group" id="end-date-group">
-                <label for="end-date">종료일</label>
-                <input type="date" id="end-date">
-              </div>
-              <div class="form-group form-full">
-                <label for="reason">사유 <span style="font-weight:400;color:var(--text3)">(선택)</span></label>
-                <textarea id="reason" placeholder="휴가 사유를 간략히 입력하세요..."></textarea>
-              </div>
-            </div>
-            <div style="margin-top:20px;display:flex;gap:10px;justify-content:flex-end;">
-              <button class="btn btn-secondary" onclick="resetForm()">초기화</button>
-              <button class="btn btn-primary" onclick="submitLeave()">
-                ✉️ 신청하기
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:20px;" id="myLeavesCard">
-          <div class="card-header">
-            <span style="font-size:18px;">📋</span>
-            <span class="card-title">내 신청 내역</span>
-          </div>
-          <div id="myLeavesBody"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Page: Calendar -->
-    <div class="page" id="page-calendar">
-      <div class="card">
-        <div class="cal-nav">
-          <button class="cal-nav-btn" onclick="moveMonth(-1)">‹</button>
-          <span class="cal-month" id="calMonth"></span>
-          <button class="cal-nav-btn" onclick="moveMonth(1)">›</button>
-          <div class="cal-legend">
-            <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#3b82f6;"></div>연차</div>
-            <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#8b5cf6;"></div>반차</div>
-            <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#f97316;"></div>병가</div>
-          </div>
-        </div>
-        <div class="cal-grid" id="calGrid"></div>
-      </div>
-    </div>
-
-    <!-- Page: Admin -->
-    <div class="page" id="page-admin">
-      <div class="card">
-        <div class="card-header">
-          <span style="font-size:18px;">⚙️</span>
-          <span class="card-title">승인 관리</span>
-          <span style="margin-left:auto;font-size:12px;color:var(--text3);">대기 중인 신청을 처리하세요</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>신청자</th>
-                <th>휴가 종류</th>
-                <th>기간</th>
-                <th>사유</th>
-                <th>신청일</th>
-                <th>상태</th>
-                <th>처리</th>
-              </tr>
-            </thead>
-            <tbody id="adminTableBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- Page: Summary -->
-    <div class="page" id="page-summary">
-      <div class="stats-grid" id="statsGrid"></div>
-      <div class="card">
-        <div class="card-header">
-          <span style="font-size:18px;">👥</span>
-          <span class="card-title">팀원별 휴가 현황</span>
-          <span style="margin-left:auto;font-size:12px;color:var(--text3)" id="summaryMonth"></span>
-        </div>
-        <div id="memberSummaryBody"></div>
-      </div>
-    </div>
-  </main>
-</div>
-
-<!-- Modal: Detail -->
-<div class="overlay" id="detailOverlay">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title">휴가 상세</span>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div class="modal-body" id="detailModalBody"></div>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="closeModal()">닫기</button>
-    </div>
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>로고 디자인</span><span class="accent">✦</span>
+    <span>브랜딩</span><span class="accent">✦</span>
+    <span>인쇄물 디자인</span><span class="accent">✦</span>
+    <span>빠른 납기</span><span class="accent">✦</span>
+    <span>무제한 수정</span><span class="accent">✦</span>
+    <span>합리적인 가격</span><span class="accent">✦</span>
+    <span>로고 디자인</span><span class="accent">✦</span>
+    <span>브랜딩</span><span class="accent">✦</span>
+    <span>인쇄물 디자인</span><span class="accent">✦</span>
+    <span>빠른 납기</span><span class="accent">✦</span>
+    <span>무제한 수정</span><span class="accent">✦</span>
+    <span>합리적인 가격</span><span class="accent">✦</span>
   </div>
 </div>
 
-<!-- Toast -->
-<div class="toast-wrap" id="toastWrap"></div>
+<!-- SERVICES -->
+<section id="services">
+  <div class="fade-in">
+    <p class="section-tag">Services</p>
+    <h2 class="section-title">제공하는 서비스</h2>
+    <p class="section-desc">브랜드의 첫인상부터 일관된 아이덴티티까지, 필요한 모든 디자인을 한 곳에서.</p>
+  </div>
+  <div class="services-grid fade-in">
+    <div class="service-card">
+      <div class="s-number">01</div>
+      <div class="s-icon">✦</div>
+      <p class="s-tag">Logo Design</p>
+      <h3 class="s-title">로고 디자인</h3>
+      <p class="s-text">브랜드의 본질을 담은 독창적인 로고를 제작합니다. 심볼, 워드마크, 콤비네이션 마크 등 다양한 유형으로 제공됩니다.</p>
+      <ul class="s-list">
+        <li>심볼마크 / 워드마크 / 콤비네이션</li>
+        <li>컬러 가이드 제공</li>
+        <li>AI, PNG, SVG 원본 파일 전달</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="s-number">02</div>
+      <div class="s-icon">◈</div>
+      <p class="s-tag">Branding</p>
+      <h3 class="s-title">브랜딩</h3>
+      <p class="s-text">로고를 넘어 브랜드 전체의 톤과 무드를 설계합니다. 컬러 팔레트, 타이포그래피, 패턴까지 일관된 시각 언어를 구축합니다.</p>
+      <ul class="s-list">
+        <li>브랜드 컬러 & 폰트 시스템</li>
+        <li>브랜드 패턴 & 그래픽 요소</li>
+        <li>브랜드 가이드라인 문서</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="s-number">03</div>
+      <div class="s-icon">▣</div>
+      <p class="s-tag">Print Design</p>
+      <h3 class="s-title">인쇄물 디자인</h3>
+      <p class="s-text">명함, 브로셔, 포스터, 패키지 등 다양한 인쇄물을 디자인합니다. 인쇄 최적화 파일까지 완벽하게 제공합니다.</p>
+      <ul class="s-list">
+        <li>명함 / 브로셔 / 카탈로그</li>
+        <li>포스터 / 배너 / 현수막</li>
+        <li>인쇄 출력용 CMYK 파일 제공</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- STRENGTHS -->
+<section id="strengths" style="padding:0;">
+  <div class="str-left">
+    <p class="section-tag">Why Us</p>
+    <h2 class="section-title" style="color:#fff;">왜 슈퍼디자이너인가요?</h2>
+    <p class="section-desc">단순한 디자인 작업이 아닙니다. 브랜드의 성공을 함께 만들어가는 파트너로서 최선을 다합니다.</p>
+  </div>
+  <div class="str-right">
+    <div class="str-item fade-in">
+      <div class="str-icon-box">⚡</div>
+      <div class="str-content">
+        <h3>빠른 작업</h3>
+        <p>의뢰 후 48시간 내 초안을 제공합니다. 급한 프로젝트도 걱정 없습니다.</p>
+      </div>
+      <span class="str-badge">48H 초안</span>
+    </div>
+    <div class="str-item fade-in">
+      <div class="str-icon-box">💰</div>
+      <div class="str-content">
+        <h3>합리적인 가격</h3>
+        <p>에이전시 퀄리티를 프리랜서 가격으로. 숨겨진 비용 없이 명확한 견적을 제공합니다.</p>
+      </div>
+      <span class="str-badge">투명한 견적</span>
+    </div>
+    <div class="str-item fade-in">
+      <div class="str-icon-box">♾</div>
+      <div class="str-content">
+        <h3>무제한 수정</h3>
+        <p>완성도에 만족할 때까지 수정 횟수 제한 없이 작업합니다. 추가 비용 없음.</p>
+      </div>
+      <span class="str-badge">무제한</span>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="fade-in">
+    <p class="section-tag">Portfolio</p>
+    <h2 class="section-title">주요 작업물</h2>
+    <p class="section-desc">직접 완성한 프로젝트들을 확인해보세요. 각각의 브랜드에 맞는 맞춤형 디자인을 제공합니다.</p>
+  </div>
+  <div class="portfolio-grid fade-in">
+    <div class="p-item">
+      <div class="p-placeholder">
+        <div class="p-ph-icon">◉</div>
+        <div class="p-ph-label">Portfolio Image</div>
+      </div>
+      <div class="p-overlay">
+        <span class="p-tag">로고 디자인</span>
+        <span class="p-name">카페 브랜드 로고</span>
+      </div>
+    </div>
+    <div class="p-item">
+      <div class="p-placeholder" style="background: linear-gradient(135deg, #e0d8cc 0%, #c8c0b0 100%);">
+        <div class="p-ph-icon">◈</div>
+        <div class="p-ph-label">Portfolio Image</div>
+      </div>
+      <div class="p-overlay">
+        <span class="p-tag">브랜딩</span>
+        <span class="p-name">뷰티 브랜드 아이덴티티</span>
+      </div>
+    </div>
+    <div class="p-item">
+      <div class="p-placeholder" style="background: linear-gradient(135deg, #dde8e0 0%, #c4d4c8 100%);">
+        <div class="p-ph-icon">▣</div>
+        <div class="p-ph-label">Portfolio Image</div>
+      </div>
+      <div class="p-overlay">
+        <span class="p-tag">인쇄물</span>
+        <span class="p-name">명함 & 브로셔 세트</span>
+      </div>
+    </div>
+    <div class="p-item">
+      <div class="p-placeholder" style="background: linear-gradient(135deg, #e8ddd8 0%, #d4c8c0 100%);">
+        <div class="p-ph-icon">◉</div>
+        <div class="p-ph-label">Portfolio Image</div>
+      </div>
+      <div class="p-overlay">
+        <span class="p-tag">로고 디자인</span>
+        <span class="p-name">스타트업 심볼마크</span>
+      </div>
+    </div>
+    <div class="p-item">
+      <div class="p-placeholder" style="background: linear-gradient(135deg, #dde0e8 0%, #c8ccd4 100%);">
+        <div class="p-ph-icon">◈</div>
+        <div class="p-ph-label">Portfolio Image</div>
+      </div>
+      <div class="p-overlay">
+        <span class="p-tag">브랜딩</span>
+        <span class="p-name">F&B 브랜드 패키지</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="fade-in">
+    <p class="section-tag">Reviews</p>
+    <h2 class="section-title">고객 후기</h2>
+    <p class="section-desc">실제 작업을 함께한 클라이언트분들의 솔직한 후기입니다.</p>
+  </div>
+  <div class="reviews-grid fade-in">
+    <div class="review-card">
+      <div class="rv-quote-mark">"</div>
+      <div class="rv-stars">★★★★★</div>
+      <p class="rv-text">처음에는 반신반의했는데, 실제로 받아보니 퀄리티가 대형 에이전시 못지않았어요. 빠른 커뮤니케이션에 수정도 바로바로 해주셔서 너무 만족스러웠습니다. 다음 프로젝트도 무조건 맡길 예정입니다!</p>
+      <div class="rv-author">
+        <div class="rv-avatar">김</div>
+        <div>
+          <div class="rv-name">김민준</div>
+          <div class="rv-role">카페 오너 · 로고 디자인</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="rv-quote-mark">"</div>
+      <div class="rv-stars">★★★★★</div>
+      <p class="rv-text">브랜딩 전체를 맡겼는데 제 생각보다 훨씬 완성도 높게 나왔어요. 컬러 가이드부터 패턴까지 일관성 있게 잘 만들어주셨고, 무엇보다 무제한 수정 덕분에 세세한 부분까지 완벽하게 맞출 수 있었습니다.</p>
+      <div class="rv-author">
+        <div class="rv-avatar">박</div>
+        <div>
+          <div class="rv-name">박서연</div>
+          <div class="rv-role">스킨케어 브랜드 대표 · 브랜딩</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="rv-quote-mark">"</div>
+      <div class="rv-stars">★★★★★</div>
+      <p class="rv-text">행사 포스터 급하게 의뢰했는데 48시간도 안 돼서 초안을 주셨어요. 가격도 합리적이고 결과물도 너무 예쁘게 나와서 주변에도 많이 추천하고 있습니다. 정말 믿고 맡길 수 있는 디자이너!</p>
+      <div class="rv-author">
+        <div class="rv-avatar">이</div>
+        <div>
+          <div class="rv-name">이지호</div>
+          <div class="rv-role">이벤트 기획사 · 인쇄물 디자인</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-tag">Contact</p>
+  <h2 class="section-title" style="max-width:500px; margin:0 auto 1rem;">지금 바로 프로젝트를<br>시작해보세요</h2>
+  <p class="section-desc" style="max-width:420px; margin:0 auto 3rem;">어떤 작은 프로젝트도 환영합니다. 간단한 문의 하나로 브랜드의 변화가 시작됩니다.</p>
+  <div class="contact-card fade-in">
+    <div class="c-info">
+      <h4>전화 / 카카오톡</h4>
+      <p><a href="tel:01098765432">010-9876-5432</a></p>
+    </div>
+    <div class="c-info">
+      <h4>인스타그램 / 포트폴리오</h4>
+      <p><a href="https://instagram.com/superdesign" target="_blank">@superdesign</a></p>
+    </div>
+    <div class="c-info">
+      <h4>운영 시간</h4>
+      <p>평일 09:00 – 22:00</p>
+    </div>
+    <div class="c-info">
+      <h4>초안 제공 기간</h4>
+      <p>의뢰 후 48시간 이내</p>
+    </div>
+  </div>
+  <div class="contact-actions">
+    <a class="btn-light" href="tel:01098765432">전화로 문의하기</a>
+    <a class="btn-ghost" href="https://instagram.com/superdesign" target="_blank">인스타그램 DM</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a class="footer-logo" href="#hero">슈퍼<span>디자이너</span></a>
+  <p>© 2025 슈퍼디자이너. All rights reserved.</p>
+  <p>@superdesign · 010-9876-5432</p>
+</footer>
 
 <script>
-// ─── Constants ───────────────────────────────────────
-const KO_MONTHS = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
-const KO_DAYS = ['일','월','화','수','목','금','토'];
-
-// ─── ⚙️ Google Apps Script URL 설정 ──────────────────
-// 3단계에서 복사한 웹앱 URL을 아래에 붙여넣으세요
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyoHTDURqlD6rXpnrr0DvK8fixeeX7FXJNPEFRDEs5axir5t12IgaGVoAl-9YKr04yC_w/exec';
-
-// ─── State ───────────────────────────────────────────
-let leaves = [];
-let calYear, calMonth;
-
-const MEMBER_COLORS = ['#2563eb','#7c3aed','#16a34a','#ea580c','#dc2626','#0891b2','#d97706'];
-const memberColorMap = {};
-
-function getMemberColor(name) {
-  if (!memberColorMap[name]) {
-    const keys = Object.keys(memberColorMap);
-    memberColorMap[name] = MEMBER_COLORS[keys.length % MEMBER_COLORS.length];
-  }
-  return memberColorMap[name];
-}
-
-// ─── API ─────────────────────────────────────────────
-function setLoading(on) {
-  document.getElementById('loadingBar').style.display = on ? 'block' : 'none';
-}
-
-async function apiGet() {
-  const res = await fetch(`${SCRIPT_URL}?action=getAll`);
-  const data = await res.json();
-  return Array.isArray(data) ? data : [];
-}
-
-async function apiAdd(leave) {
-  await fetch(SCRIPT_URL, {
-    method: 'POST',
-    body: JSON.stringify({ action: 'add', leave })
-  });
-}
-
-async function apiUpdate(id, status) {
-  await fetch(SCRIPT_URL, {
-    method: 'POST',
-    body: JSON.stringify({ action: 'update', id, status })
-  });
-}
-
-async function refreshLeaves() {
-  setLoading(true);
-  try {
-    leaves = await apiGet();
-  } catch(e) {
-    toast('데이터를 불러오지 못했습니다. URL을 확인하세요.', 'error');
-  }
-  setLoading(false);
-  updateBadge();
-}
-
-function updateBadge() {
-  const pending = leaves.filter(l => l.status === 'pending').length;
-  document.getElementById('pendingBadge').textContent = pending;
-  document.getElementById('pendingBadge').style.display = pending ? '' : 'none';
-}
-
-// ─── Init ────────────────────────────────────────────
-(async function init() {
-  const now = new Date();
-  calYear = now.getFullYear();
-  calMonth = now.getMonth();
-
-  const d = now.toLocaleDateString('ko-KR', { year:'numeric', month:'long', day:'numeric', weekday:'long' });
-  document.getElementById('todayDate').textContent = d;
-
-  // Set default dates
-  const today = now.toISOString().split('T')[0];
-  document.getElementById('start-date').value = today;
-  document.getElementById('end-date').value = today;
-
-  if (SCRIPT_URL === '여기에_URL_붙여넣기') {
-    toast('⚠️ SCRIPT_URL을 설정해주세요.', 'error');
-    return;
-  }
-
-  await refreshLeaves();
-
-  document.getElementById('leave-type').addEventListener('change', function() {
-    const isHalf = this.value === '반차';
-    document.getElementById('halfday-period-group').style.display = isHalf ? '' : 'none';
-    document.getElementById('end-date-group').style.display = isHalf ? 'none' : '';
-    if (isHalf) {
-      const s = document.getElementById('start-date').value;
-      document.getElementById('end-date').value = s;
-    }
-  });
-  document.getElementById('start-date').addEventListener('change', function() {
-    if (document.getElementById('leave-type').value === '반차') return;
-    if (document.getElementById('end-date').value < this.value)
-      document.getElementById('end-date').value = this.value;
-  });
-
-  updateBadge();
-  renderMyLeaves();
-  renderCalendar();
-  renderAdmin();
-  renderSummary();
-})();
-
-async function onRefresh() {
-  await refreshLeaves();
-  renderMyLeaves();
-  renderCalendar();
-  renderAdmin();
-  renderSummary();
-  toast('새로고침 완료', 'success');
-}
-
-// ─── Navigation ──────────────────────────────────────
-const PAGE_TITLES = { apply:'휴가 신청', calendar:'휴가 달력', admin:'관리자 화면', summary:'이번달 요약' };
-
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => {
-    if (n.getAttribute('onclick')?.includes(id)) n.classList.add('active');
-  });
-  document.getElementById('pageTitle').textContent = PAGE_TITLES[id];
-  if (id === 'calendar') renderCalendar();
-  if (id === 'admin') renderAdmin();
-  if (id === 'summary') renderSummary();
-}
-
-// ─── Apply Page ──────────────────────────────────────
-async function submitLeave() {
-  const name = document.getElementById('emp-name').value.trim();
-  const type = document.getElementById('leave-type').value;
-  const start = document.getElementById('start-date').value;
-  const end = type === '반차' ? start : document.getElementById('end-date').value;
-  const reason = document.getElementById('reason').value.trim();
-  const halfday = type === '반차' ? document.getElementById('halfday-period').value : null;
-
-  if (!name) { toast('이름을 입력해주세요.', 'error'); return; }
-  if (!start) { toast('날짜를 선택해주세요.', 'error'); return; }
-  if (start > end) { toast('종료일이 시작일보다 빠릅니다.', 'error'); return; }
-
-  const id = Date.now();
-  const today = new Date().toISOString().split('T')[0];
-  const leave = { id, name, type, start, end, reason, status: 'pending', createdAt: today, halfday };
-
-  setLoading(true);
-  try {
-    await apiAdd(leave);
-    await refreshLeaves();
-    renderMyLeaves();
-    renderAdmin();
-    toast('✅ 휴가 신청이 완료되었습니다. 승인을 기다려주세요.', 'success');
-  } catch(e) {
-    toast('신청 중 오류가 발생했습니다.', 'error');
-  }
-  setLoading(false);
-}
-
-function resetForm() {
-  document.getElementById('emp-name').value = '';
-  document.getElementById('reason').value = '';
-  document.getElementById('leave-type').value = '연차';
-  document.getElementById('halfday-period-group').style.display = 'none';
-  document.getElementById('end-date-group').style.display = '';
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('start-date').value = today;
-  document.getElementById('end-date').value = today;
-}
-
-function renderMyLeaves() {
-  const body = document.getElementById('myLeavesBody');
-  const name = document.getElementById('emp-name').value.trim();
-  let list = name ? leaves.filter(l => l.name === name) : leaves;
-  list = [...list].reverse().slice(0, 10);
-
-  if (!list.length) {
-    body.innerHTML = `<div class="empty"><div class="empty-icon">📭</div><div class="empty-text">신청 내역이 없습니다</div></div>`;
-    return;
-  }
-
-  body.innerHTML = `<table style="width:100%">
-    <thead><tr>
-      <th>이름</th><th>종류</th><th>기간</th><th>상태</th><th></th>
-    </tr></thead>
-    <tbody>
-    ${list.map(l => `
-      <tr>
-        <td><b>${l.name}</b></td>
-        <td><span class="tag tag-${l.type}">${l.type}${l.halfday ? ' ('+l.halfday+')' : ''}</span></td>
-        <td style="color:var(--text2)">${formatDate(l.start)}${l.start!==l.end?' ~ '+formatDate(l.end):''}</td>
-        <td>${statusTag(l.status)}</td>
-        <td><button class="btn btn-secondary btn-sm" onclick="openDetail(${l.id})">상세</button></td>
-      </tr>
-    `).join('')}
-    </tbody>
-  </table>`;
-}
-
-// ─── Calendar Page ───────────────────────────────────
-
-function moveMonth(dir) {
-  calMonth += dir;
-  if (calMonth < 0) { calMonth = 11; calYear--; }
-  if (calMonth > 11) { calMonth = 0; calYear++; }
-  renderCalendar();
-}
-
-function renderCalendar() {
-  document.getElementById('calMonth').textContent = `${calYear}년 ${KO_MONTHS[calMonth]}`;
-  const grid = document.getElementById('calGrid');
-  grid.innerHTML = '';
-
-  // Day headers
-  KO_DAYS.forEach(d => {
-    const el = document.createElement('div');
-    el.className = 'cal-day-header';
-    el.textContent = d;
-    grid.appendChild(el);
-  });
-
-  const firstDay = new Date(calYear, calMonth, 1).getDay();
-  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-  const today = new Date();
-
-  const getEvents = date => leaves.filter(l => {
-    if (l.status === 'rejected') return false;
-    const d = date.toISOString().split('T')[0];
-    return d >= l.start && d <= l.end;
-  });
-
-  // Blanks
-  for (let i = 0; i < firstDay; i++) {
-    const prev = new Date(calYear, calMonth, -firstDay + i + 1);
-    const cell = makeCell(prev, true, getEvents(prev));
-    grid.appendChild(cell);
-  }
-
-  // Days
-  for (let d = 1; d <= daysInMonth; d++) {
-    const date = new Date(calYear, calMonth, d);
-    const isToday = date.toDateString() === today.toDateString();
-    const cell = makeCell(date, false, getEvents(date), isToday);
-    grid.appendChild(cell);
-  }
-
-  // Trailing
-  const total = firstDay + daysInMonth;
-  const trailing = total % 7 === 0 ? 0 : 7 - (total % 7);
-  for (let i = 1; i <= trailing; i++) {
-    const date = new Date(calYear, calMonth + 1, i);
-    const cell = makeCell(date, true, getEvents(date));
-    grid.appendChild(cell);
-  }
-}
-
-function makeCell(date, otherMonth, events, isToday) {
-  const cell = document.createElement('div');
-  const dow = date.getDay();
-  cell.className = 'cal-cell' + (otherMonth ? ' other-month' : '') + (isToday ? ' today' : '') + (dow === 0 ? ' cal-sun' : '') + (dow === 6 ? ' cal-sat' : '');
-
-  const dateEl = document.createElement('div');
-  dateEl.className = 'cal-date';
-  dateEl.textContent = date.getDate();
-  cell.appendChild(dateEl);
-
-  events.slice(0, 3).forEach(ev => {
-    const el = document.createElement('div');
-    el.className = `cal-event ${ev.type}`;
-    el.textContent = `${ev.name} ${ev.type}`;
-    el.title = `${ev.name} - ${ev.type}`;
-    el.onclick = () => openDetail(ev.id);
-    cell.appendChild(el);
-  });
-  if (events.length > 3) {
-    const el = document.createElement('div');
-    el.style.cssText = 'font-size:11px;color:var(--text3);padding:2px 6px;';
-    el.textContent = `+${events.length - 3}명 더`;
-    cell.appendChild(el);
-  }
-  return cell;
-}
-
-// ─── Admin Page ──────────────────────────────────────
-function renderAdmin() {
-  const tbody = document.getElementById('adminTableBody');
-  const sorted = [...leaves].sort((a, b) => {
-    const order = { pending: 0, approved: 1, rejected: 2 };
-    return order[a.status] - order[b.status] || b.id - a.id;
-  });
-
-  if (!sorted.length) {
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty"><div class="empty-icon">📭</div><div class="empty-text">신청 내역이 없습니다</div></div></td></tr>`;
-    return;
-  }
-
-  tbody.innerHTML = sorted.map(l => `
-    <tr>
-      <td>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div class="member-avatar" style="width:30px;height:30px;font-size:12px;background:${getMemberColor(l.name)}">${l.name[0]}</div>
-          <b>${l.name}</b>
-        </div>
-      </td>
-      <td><span class="tag tag-${l.type}">${l.type}${l.halfday ? ' ('+l.halfday+')' : ''}</span></td>
-      <td style="color:var(--text2);font-size:13px;">${formatDate(l.start)}${l.start!==l.end?' ~<br>'+formatDate(l.end):''}</td>
-      <td style="color:var(--text2);max-width:160px;font-size:12px;">${l.reason || '<span style="color:var(--text3)">-</span>'}</td>
-      <td style="color:var(--text3);font-size:12px;">${l.createdAt}</td>
-      <td>${statusTag(l.status)}</td>
-      <td>
-        ${l.status === 'pending' ? `
-          <div style="display:flex;gap:5px;">
-            <button class="btn btn-success btn-sm" onclick="adminAction(${l.id},'approved')">✓ 승인</button>
-            <button class="btn btn-danger btn-sm" onclick="adminAction(${l.id},'rejected')">✕ 거절</button>
-          </div>
-        ` : `<span style="font-size:12px;color:var(--text3)">처리 완료</span>`}
-      </td>
-    </tr>
-  `).join('');
-}
-
-async function adminAction(id, status) {
-  const leave = leaves.find(l => String(l.id) === String(id));
-  if (!leave) return;
-  setLoading(true);
-  try {
-    await apiUpdate(id, status);
-    await refreshLeaves();
-    renderAdmin();
-    renderCalendar();
-    renderSummary();
-    const msg = status === 'approved' ? `✅ ${leave.name}님의 휴가를 승인했습니다.` : `❌ ${leave.name}님의 휴가를 거절했습니다.`;
-    toast(msg, status === 'approved' ? 'success' : 'error');
-  } catch(e) {
-    toast('처리 중 오류가 발생했습니다.', 'error');
-  }
-  setLoading(false);
-}
-
-// ─── Summary Page ────────────────────────────────────
-function renderSummary() {
-  const now = new Date();
-  const y = now.getFullYear(), m = now.getMonth();
-  const monthStr = `${y}-${String(m+1).padStart(2,'0')}`;
-  document.getElementById('summaryMonth').textContent = `${y}년 ${KO_MONTHS[m]} 기준`;
-
-  const thisMonth = leaves.filter(l => l.start.startsWith(monthStr));
-  const approved = thisMonth.filter(l => l.status === 'approved');
-  const pending = thisMonth.filter(l => l.status === 'pending');
-
-  // Stats
-  const totalDays = approved.reduce((acc, l) => acc + calcDays(l), 0);
-  const members = [...new Set(thisMonth.map(l => l.name))].length;
-
-  document.getElementById('statsGrid').innerHTML = `
-    <div class="stat-card">
-      <div class="stat-label">이번달 총 신청</div>
-      <div class="stat-value" style="color:var(--accent)">${thisMonth.length}</div>
-      <div class="stat-sub">건</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">승인된 휴가일수</div>
-      <div class="stat-value" style="color:var(--green)">${totalDays}</div>
-      <div class="stat-sub">일</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">대기 중</div>
-      <div class="stat-value" style="color:var(--yellow)">${pending.length}</div>
-      <div class="stat-sub">건</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">신청 팀원 수</div>
-      <div class="stat-value">${members}</div>
-      <div class="stat-sub">명</div>
-    </div>
-  `;
-
-  // Member breakdown
-  const memberData = {};
-  approved.forEach(l => {
-    if (!memberData[l.name]) memberData[l.name] = { 연차: 0, 반차: 0, 병가: 0 };
-    const key = l.type;
-    memberData[l.name][key] = (memberData[l.name][key] || 0) + calcDays(l);
-  });
-
-  const allNames = [...new Set(thisMonth.map(l => l.name))];
-  allNames.forEach(n => { if (!memberData[n]) memberData[n] = { 연차: 0, 반차: 0, 병가: 0 }; });
-
-  const maxDays = Math.max(...Object.values(memberData).map(v => v.연차 + v.반차 + v.병가), 1);
-  const body = document.getElementById('memberSummaryBody');
-
-  if (!allNames.length) {
-    body.innerHTML = `<div class="empty"><div class="empty-icon">📊</div><div class="empty-text">이번달 신청 내역이 없습니다</div></div>`;
-    return;
-  }
-
-  body.innerHTML = allNames.map(name => {
-    const d = memberData[name];
-    const total = d.연차 + d.반차 + d.병가;
-    const color = getMemberColor(name);
-    return `
-    <div class="member-row">
-      <div class="member-avatar" style="background:${color}">${name[0]}</div>
-      <div class="member-name">${name}</div>
-      <div class="member-bars">
-        ${d.연차 > 0 ? `<div class="bar-row"><div class="bar-label" style="color:#2563eb">연차</div><div class="bar-track"><div class="bar-fill" style="width:${(d.연차/maxDays)*100}%;background:#3b82f6"></div></div></div>` : ''}
-        ${d.반차 > 0 ? `<div class="bar-row"><div class="bar-label" style="color:#7c3aed">반차</div><div class="bar-track"><div class="bar-fill" style="width:${(d.반차/maxDays)*100}%;background:#8b5cf6"></div></div></div>` : ''}
-        ${d.병가 > 0 ? `<div class="bar-row"><div class="bar-label" style="color:#ea580c">병가</div><div class="bar-track"><div class="bar-fill" style="width:${(d.병가/maxDays)*100}%;background:#f97316"></div></div></div>` : ''}
-        ${total === 0 ? `<div style="font-size:12px;color:var(--text3)">승인된 휴가 없음</div>` : ''}
-      </div>
-      <div class="member-counts">
-        ${d.연차 > 0 ? `<div class="count-item"><span style="color:#2563eb;font-size:10px;">●</span> 연차 <span class="count-num">${d.연차}일</span></div>` : ''}
-        ${d.반차 > 0 ? `<div class="count-item"><span style="color:#7c3aed;font-size:10px;">●</span> 반차 <span class="count-num">${d.반차}회</span></div>` : ''}
-        ${d.병가 > 0 ? `<div class="count-item"><span style="color:#ea580c;font-size:10px;">●</span> 병가 <span class="count-num">${d.병가}일</span></div>` : ''}
-        <div style="font-size:12px;font-weight:700;color:var(--text);margin-top:2px;">총 ${total}일</div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-// ─── Detail Modal ────────────────────────────────────
-function openDetail(id) {
-  const l = leaves.find(x => x.id === id);
-  if (!l) return;
-  const body = document.getElementById('detailModalBody');
-  body.innerHTML = `
-    <div class="detail-row"><div class="detail-label">신청자</div><div class="detail-value"><b>${l.name}</b></div></div>
-    <div class="detail-row"><div class="detail-label">휴가 종류</div><div class="detail-value"><span class="tag tag-${l.type}">${l.type}${l.halfday ? ' ('+l.halfday+')' : ''}</span></div></div>
-    <div class="detail-row"><div class="detail-label">기간</div><div class="detail-value">${l.start === l.end ? formatDate(l.start) : formatDate(l.start) + ' ~ ' + formatDate(l.end)} (${calcDays(l)}일)</div></div>
-    <div class="detail-row"><div class="detail-label">사유</div><div class="detail-value">${l.reason || '<span style="color:var(--text3)">없음</span>'}</div></div>
-    <div class="detail-row"><div class="detail-label">신청일</div><div class="detail-value">${l.createdAt}</div></div>
-    <div class="detail-row"><div class="detail-label">상태</div><div class="detail-value">${statusTag(l.status)}</div></div>
-  `;
-  document.getElementById('detailOverlay').classList.add('open');
-}
-
-function closeModal() {
-  document.getElementById('detailOverlay').classList.remove('open');
-}
-document.getElementById('detailOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-
-// ─── Helpers ─────────────────────────────────────────
-function calcDays(l) {
-  if (l.type === '반차') return 0.5;
-  const start = new Date(l.start);
-  const end = new Date(l.end);
-  let count = 0;
-  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-    const dow = d.getDay();
-    if (dow !== 0 && dow !== 6) count++;
-  }
-  return count;
-}
-
-function formatDate(str) {
-  if (!str) return '';
-  const [y, m, d] = str.split('-');
-  return `${parseInt(m)}월 ${parseInt(d)}일`;
-}
-
-function statusTag(s) {
-  const map = { pending: ['pending', '대기 중'], approved: ['approved', '승인됨'], rejected: ['rejected', '거절됨'] };
-  const [cls, label] = map[s] || ['pending', s];
-  return `<span class="tag tag-${cls}">${label}</span>`;
-}
-
-function toast(msg, type = '') {
-  const wrap = document.getElementById('toastWrap');
-  const el = document.createElement('div');
-  el.className = `toast ${type}`;
-  el.textContent = msg;
-  wrap.appendChild(el);
-  setTimeout(() => el.remove(), 3000);
-}
+  // Fade in on scroll
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
